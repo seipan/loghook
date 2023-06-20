@@ -29,7 +29,7 @@ import (
 	"net/http"
 )
 
-func sendLogToDiscord(whurl string, dw *discordWebhook) {
+func SendLogToDiscord(whurl string, dw *discordWebhook) {
 	j, err := json.Marshal(dw)
 	if err != nil {
 		fmt.Println("json err:", err)
