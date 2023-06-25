@@ -52,7 +52,7 @@ func SendLogToDiscord(whurl string, dw *discordWebhook) {
 	}
 }
 
-func setWebhookStruct(name string, img string) *discordWebhook {
+func SetWebhookStruct(name string, img string) *discordWebhook {
 	dw := &discordWebhook{
 		UserName:  name,
 		AvatarURL: img,
@@ -60,7 +60,7 @@ func setWebhookStruct(name string, img string) *discordWebhook {
 	return dw
 }
 
-func setWebfookMessage(dis *discordWebhook, message string, user string, level string) *discordWebhook {
+func SetWebfookMessage(dis *discordWebhook, message string, user string, level string) *discordWebhook {
 	dis.Content = user
 	dis.Embeds = []discordEmbed{
 		discordEmbed{
