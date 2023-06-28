@@ -21,3 +21,58 @@
 // SOFTWARE.
 
 package loghook
+
+type Discord struct {
+	// This is the webhook url of the channel for which you want to send notifications to the discord.
+	Webhook string
+
+	// This is the webhook url for debug level log
+	DebugWebhook string
+
+	// This is the webhook url for info level log
+	InfoWebhook string
+
+	// This is the webhook url for warn level log
+	WarnWebhook string
+
+	// This is the webhook url for error level log
+	ErrorWebhook string
+
+	// This is the webhook url for panic level log
+	PanicWebhook string
+
+	// This is the webhook url for fatal level log
+	FatalWebhook string
+}
+
+func NewDiscord(webhook string) *Discord {
+	return &Discord{Webhook: webhook}
+}
+
+func (d *Discord) SetWebhook(webhook string) {
+	d.Webhook = webhook
+}
+
+func (d *Discord) SetDebugWebhook(webhook string) {
+	d.DebugWebhook = webhook
+}
+
+func (d *Discord) SetInfoWebhook(webhook string) {
+	d.InfoWebhook = webhook
+}
+
+func (d *Discord) SetWarnWebhook(webhook string) {
+	d.WarnWebhook = webhook
+}
+
+func (d *Discord) SetErrorWebhook(webhook string) {
+	d.ErrorWebhook = webhook
+}
+
+func (d *Discord) SetPanicWebhook(webhook string) {
+	d.PanicWebhook = webhook
+}
+
+func (d *Discord) SetFatalWebhook(webhook string) {
+	d.FatalWebhook = webhook
+}

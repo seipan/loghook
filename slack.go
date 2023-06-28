@@ -21,3 +21,58 @@
 // SOFTWARE.
 
 package loghook
+
+type Slack struct {
+	// This is the webhook url of the channel for which you want to send notifications to the slack.
+	Webhook string
+
+	// This is the webhook url for debug level log
+	DebugWebhook string
+
+	// This is the webhook url for info level log
+	InfoWebhook string
+
+	// This is the webhook url for warn level log
+	WarnWebhook string
+
+	// This is the webhook url for error level log
+	ErrorWebhook string
+
+	// This is the webhook url for panic level log
+	PanicWebhook string
+
+	// This is the webhook url for fatal level log
+	FatalWebhook string
+}
+
+func NewSlack(webhook string) *Slack {
+	return &Slack{Webhook: webhook}
+}
+
+func (s *Slack) SetWebhook(webhook string) {
+	s.Webhook = webhook
+}
+
+func (s *Slack) SetDebugWebhook(webhook string) {
+	s.DebugWebhook = webhook
+}
+
+func (s *Slack) SetInfoWebhook(webhook string) {
+	s.InfoWebhook = webhook
+}
+
+func (s *Slack) SetWarnWebhook(webhook string) {
+	s.WarnWebhook = webhook
+}
+
+func (s *Slack) SetErrorWebhook(webhook string) {
+	s.ErrorWebhook = webhook
+}
+
+func (s *Slack) SetPanicWebhook(webhook string) {
+	s.PanicWebhook = webhook
+}
+
+func (s *Slack) SetFatalWebhook(webhook string) {
+	s.FatalWebhook = webhook
+}
