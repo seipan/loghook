@@ -37,27 +37,11 @@ type Logger struct {
 	level Level
 	mutex sync.Mutex
 
-	// This is the webhook url of the channel for which you want to send notifications to the discord.
-	// ex) discord.com/api/webhooks/xxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-	Webhook string
+	Types string
 
-	// This is the webhook url for debug level log
-	DebugWebhook string
+	Slack *Slack
 
-	// This is the webhook url for info level log
-	InfoWebhook string
-
-	// This is the webhook url for warn level log
-	WarnWebhook string
-
-	// This is the webhook url for error level log
-	ErrorWebhook string
-
-	// This is the webhook url for panic level log
-	PanicWebhook string
-
-	// This is the webhook url for fatal level log
-	FatalWebhook string
+	Discord *Discord
 
 	// This is the url of the icon image of the bot that sends notifications to the discord
 	// ex) https://cdn-ak.f.st-hatena.com/images/fotolife/h/hikiniku0115/20190806/20190806000644.png
@@ -68,17 +52,21 @@ type Logger struct {
 	Name string
 }
 
-func NewLogger(webhook string, img string, name string) *Logger {
+func NewLogger(img string, name string, types string) *Logger {
 	return &Logger{
-		level:   InfoLevel,
-		Webhook: webhook,
-		Img:     img,
-		Name:    name,
+		level: InfoLevel,
+		Img:   img,
+		Name:  name,
+		Types: types,
 	}
 }
 
 func (l *Logger) check(level Level) bool {
-	return l.Level() <= level
+	return (l.checkTypes() && l.Level() <= level)
+}
+
+func (l *Logger) checkTypes() bool {
+	return (l.Types == "slack" || l.Types == "discord")
 }
 
 func (l *Logger) SetLevel(level Level) {
@@ -87,27 +75,51 @@ func (l *Logger) SetLevel(level Level) {
 
 // Sets the specified url in the webhook for each level
 func (l *Logger) SetDebugWebhook(webhook string) {
-	l.DebugWebhook = webhook
+	if l.Types == "slack" {
+		l.Slack.SetDebugWebhook(webhook)
+	} else {
+		l.Discord.SetDebugWebhook(webhook)
+	}
 }
 
 func (l *Logger) SetInfoWebhook(webhook string) {
-	l.InfoWebhook = webhook
+	if l.Types == "slack" {
+		l.Slack.SetInfoWebhook(webhook)
+	} else {
+		l.Discord.SetInfoWebhook(webhook)
+	}
 }
 
 func (l *Logger) SetWarnWebhook(webhook string) {
-	l.WarnWebhook = webhook
+	if l.Types == "slack" {
+		l.Slack.SetWarnWebhook(webhook)
+	} else {
+		l.Discord.SetWarnWebhook(webhook)
+	}
 }
 
 func (l *Logger) SetErrorWebhook(webhook string) {
-	l.ErrorWebhook = webhook
+	if l.Types == "slack" {
+		l.Slack.SetErrorWebhook(webhook)
+	} else {
+		l.Discord.SetErrorWebhook(webhook)
+	}
 }
 
 func (l *Logger) SetPanicWebhook(webhook string) {
-	l.PanicWebhook = webhook
+	if l.Types == "slack" {
+		l.Slack.SetPanicWebhook(webhook)
+	} else {
+		l.Discord.SetPanicWebhook(webhook)
+	}
 }
 
 func (l *Logger) SetFatalWebhook(webhook string) {
-	l.FatalWebhook = webhook
+	if l.Types == "slack" {
+		l.Slack.SetFatalWebhook(webhook)
+	} else {
+		l.Discord.SetFatalWebhook(webhook)
+	}
 }
 
 func (l *Logger) Level() Level {
@@ -115,21 +127,48 @@ func (l *Logger) Level() Level {
 }
 
 func (l *Logger) resWebhookURLbyLevel(level Level) string {
-	switch level {
-	case DebugLevel:
-		return l.DebugWebhook
-	case InfoLevel:
-		return l.InfoWebhook
-	case WarnLevel:
-		return l.WarnWebhook
-	case ErrorLevel:
-		return l.ErrorWebhook
-	case PanicLevel:
-		return l.PanicWebhook
-	case FatalLevel:
-		return l.FatalWebhook
-	default:
-		return "unknown"
+	if l.Types == "slack" {
+		switch level {
+		case DebugLevel:
+			return l.Slack.DebugWebhook
+		case InfoLevel:
+			return l.Slack.InfoWebhook
+		case WarnLevel:
+			return l.Slack.WarnWebhook
+		case ErrorLevel:
+			return l.Slack.ErrorWebhook
+		case PanicLevel:
+			return l.Slack.PanicWebhook
+		case FatalLevel:
+			return l.Slack.FatalWebhook
+		default:
+			return "unknown"
+		}
+	} else {
+		switch level {
+		case DebugLevel:
+			return l.Discord.DebugWebhook
+		case InfoLevel:
+			return l.Discord.InfoWebhook
+		case WarnLevel:
+			return l.Discord.WarnWebhook
+		case ErrorLevel:
+			return l.Discord.ErrorWebhook
+		case PanicLevel:
+			return l.Discord.PanicWebhook
+		case FatalLevel:
+			return l.Discord.FatalWebhook
+		default:
+			return "unknown"
+		}
+	}
+}
+
+func (l *Logger) Webhook() string {
+	if l.Types == "slack" {
+		return l.Slack.Webhook
+	} else {
+		return l.Discord.Webhook
 	}
 }
 
@@ -144,7 +183,7 @@ func (l *Logger) Log(level Level, user string, args ...interface{}) {
 
 		webhook := l.resWebhookURLbyLevel(level)
 		if webhook == "unknown" || webhook == "" {
-			webhook = l.Webhook
+			webhook = l.Webhook()
 		}
 
 		// send log to discord
@@ -168,7 +207,7 @@ func (l *Logger) Logf(level Level, user string, format string, args ...interface
 
 		webhook := l.resWebhookURLbyLevel(level)
 		if webhook == "unknown" || webhook == "" {
-			webhook = l.Webhook
+			webhook = l.Webhook()
 		}
 
 		// send log to discord
