@@ -150,7 +150,10 @@ func (l *Logger) Log(level Level, user string, args ...interface{}) {
 		// send log to discord
 		dis := discord.SetWebhookStruct(l.Name, l.Img)
 		dis = discord.SetWebfookMessage(dis, message, user, level.String())
-		discord.SendLogToDiscord(webhook, dis)
+		err := discord.SendLogToDiscord(webhook, dis)
+		if err != nil {
+			fmt.Printf("failed to send log to discord: %v\n", err)
+		}
 	}
 }
 

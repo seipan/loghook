@@ -29,17 +29,15 @@ import (
 	"net/http"
 )
 
-func SendLogToDiscord(whurl string, dw *discordWebhook) {
+func SendLogToDiscord(whurl string, dw *discordWebhook) error {
 	j, err := json.Marshal(dw)
 	if err != nil {
-		fmt.Println("json err:", err)
-		return
+		return fmt.Errorf("json marshal err: %w", err)
 	}
 
 	req, err := http.NewRequest("POST", whurl, bytes.NewBuffer(j))
 	if err != nil {
-		fmt.Println("new request err:", err)
-		return
+		return fmt.Errorf("new request err: %w", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
 
@@ -47,9 +45,10 @@ func SendLogToDiscord(whurl string, dw *discordWebhook) {
 
 	_, err = client.Do(req)
 	if err != nil {
-		fmt.Println("client err:", err)
-		return
+		return fmt.Errorf("client do err: %w", err)
 	}
+
+	return nil
 }
 
 func SetWebhookStruct(name string, img string) *discordWebhook {
