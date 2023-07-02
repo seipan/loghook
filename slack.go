@@ -22,6 +22,8 @@
 
 package loghook
 
+// This structure slack holds the webhook url for logging to slack.
+// This webhook assumes that the Incoming Webhook is used.
 type Slack struct {
 	// This is the webhook url of the channel for which you want to send notifications to the slack.
 	Webhook string
@@ -49,30 +51,38 @@ func NewSlack(webhook string) *Slack {
 	return &Slack{Webhook: webhook}
 }
 
+// Sets the webhook url.
+// This url will be used if the webhook url for any level is not set
 func (s *Slack) SetWebhook(webhook string) {
 	s.Webhook = webhook
 }
 
+// Set the webhookurl for the Debug level.
 func (s *Slack) SetDebugWebhook(webhook string) {
 	s.DebugWebhook = webhook
 }
 
+// Set the webhookurl for the Info level.
 func (s *Slack) SetInfoWebhook(webhook string) {
 	s.InfoWebhook = webhook
 }
 
+// Set the webhookurl for the Warn level.
 func (s *Slack) SetWarnWebhook(webhook string) {
 	s.WarnWebhook = webhook
 }
 
+// Set the webhookurl for the Error level.
 func (s *Slack) SetErrorWebhook(webhook string) {
 	s.ErrorWebhook = webhook
 }
 
+// Set the webhookurl for the Panic level.
 func (s *Slack) SetPanicWebhook(webhook string) {
 	s.PanicWebhook = webhook
 }
 
+// Set the webhookurl for the Fatal level.
 func (s *Slack) SetFatalWebhook(webhook string) {
 	s.FatalWebhook = webhook
 }
