@@ -172,6 +172,63 @@ func (l *Logger) Webhook() string {
 	}
 }
 
+// nosend webhook method.
+func (l *Logger) NoSendWebhook() {
+	if l.Types == "slack" {
+		l.Slack.Webhook = "nosend"
+	} else {
+		l.Discord.Webhook = "nosend"
+	}
+}
+
+func (l *Logger) NoSendInfo() {
+	if l.Types == "slack" {
+		l.Slack.InfoWebhook = "nosend"
+	} else {
+		l.Discord.InfoWebhook = "nosend"
+	}
+}
+
+func (l *Logger) NoSendDebug() {
+	if l.Types == "slack" {
+		l.Slack.DebugWebhook = "nosend"
+	} else {
+		l.Discord.DebugWebhook = "nosend"
+	}
+}
+
+func (l *Logger) NoSendWarn() {
+	if l.Types == "slack" {
+		l.Slack.WarnWebhook = "nosend"
+	} else {
+		l.Discord.WarnWebhook = "nosend"
+	}
+}
+
+func (l *Logger) NoSendError() {
+	if l.Types == "slack" {
+		l.Slack.ErrorWebhook = "nosend"
+	} else {
+		l.Discord.ErrorWebhook = "nosend"
+	}
+}
+
+func (l *Logger) NoSendPanic() {
+	if l.Types == "slack" {
+		l.Slack.PanicWebhook = "nosend"
+	} else {
+		l.Discord.PanicWebhook = "nosend"
+	}
+}
+
+func (l *Logger) NoSendFatal() {
+	if l.Types == "slack" {
+		l.Slack.FatalWebhook = "nosend"
+	} else {
+		l.Discord.FatalWebhook = "nosend"
+	}
+}
+
 func (l *Logger) Log(level Level, user string, args ...interface{}) {
 	if l.check(level) {
 		message := ""
@@ -182,7 +239,9 @@ func (l *Logger) Log(level Level, user string, args ...interface{}) {
 		log.Println(message)
 
 		webhook := l.resWebhookURLbyLevel(level)
-		if webhook == "unknown" || webhook == "" {
+		if webhook == "nosend" {
+			return
+		} else if webhook == "unknown" || webhook == "" {
 			webhook = l.Webhook()
 		}
 
@@ -206,7 +265,9 @@ func (l *Logger) Logf(level Level, user string, format string, args ...interface
 		log.Println(message)
 
 		webhook := l.resWebhookURLbyLevel(level)
-		if webhook == "unknown" || webhook == "" {
+		if webhook == "nosend" {
+			return
+		} else if webhook == "unknown" || webhook == "" {
 			webhook = l.Webhook()
 		}
 
