@@ -32,7 +32,7 @@ import (
 	"github.com/seipan/loghook/discord"
 )
 
-// This structure defines what is needed to output logs to any channel on discord.
+// This structure defines what is needed to output logs to any channel on discord or slack.
 type Logger struct {
 	level Level
 	mutex sync.Mutex
