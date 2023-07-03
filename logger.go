@@ -230,12 +230,12 @@ func (l *Logger) NoSendFatal() {
 	}
 }
 
-func (l *Logger) Log(level Level, user string, args ...interface{}) {
+func (l *Logger) Log(level Level, args ...interface{}) {
 	if l.check(level) {
 		message := ""
 		message = fmt.Sprint(args...)
 
-		text := fmt.Sprintf("time: %s\nuser: %s\nlevel: %s\nmessage: %s\n", time.Now().Format("2006-01-02 15:04:05"), user, level.String(), message)
+		text := fmt.Sprintf("\"time\": %s \"level\": %s \"message\" : %s\n", time.Now().Format("2006-01-02 15:04:05"), level.String(), message)
 
 		l.mutex.Lock()
 		defer l.mutex.Unlock()
@@ -250,7 +250,7 @@ func (l *Logger) Log(level Level, user string, args ...interface{}) {
 
 		// send log to discord or slack
 		dis := discord.SetWebhookStruct(l.Name, l.Img)
-		dis = discord.SetWebfookMessage(dis, text, user, level.String())
+		dis = discord.SetWebfookMessage(dis, text, level.String())
 		err := discord.SendLogToDiscord(webhook, dis)
 		if err != nil {
 			fmt.Printf("failed to send log to discord: %v\n", err)
@@ -258,7 +258,7 @@ func (l *Logger) Log(level Level, user string, args ...interface{}) {
 	}
 }
 
-func (l *Logger) Logf(level Level, user string, format string, args ...interface{}) {
+func (l *Logger) Logf(level Level, format string, args ...interface{}) {
 	if l.check(level) {
 		message := ""
 		message = fmt.Sprintf(format, args...)
@@ -276,60 +276,60 @@ func (l *Logger) Logf(level Level, user string, format string, args ...interface
 
 		// send log to discord or slack
 		dis := discord.SetWebhookStruct(l.Name, l.Img)
-		dis = discord.SetWebfookMessage(dis, message, user, level.String())
+		dis = discord.SetWebfookMessage(dis, message, level.String())
 		discord.SendLogToDiscord(webhook, dis)
 	}
 }
 
-func (l *Logger) Info(user string, i ...interface{}) {
-	l.Log(InfoLevel, user, i...)
+func (l *Logger) Info(i ...interface{}) {
+	l.Log(InfoLevel, i...)
 
 }
 
-func (l *Logger) Infof(user string, format string, i ...interface{}) {
-	l.Logf(InfoLevel, user, format, i...)
+func (l *Logger) Infof(format string, i ...interface{}) {
+	l.Logf(InfoLevel, format, i...)
 }
 
-func (l *Logger) Debug(user string, i ...interface{}) {
-	l.Log(DebugLevel, user, i...)
+func (l *Logger) Debug(i ...interface{}) {
+	l.Log(DebugLevel, i...)
 }
 
-func (l *Logger) Debugf(user string, format string, i ...interface{}) {
-	l.Logf(DebugLevel, user, format, i...)
+func (l *Logger) Debugf(format string, i ...interface{}) {
+	l.Logf(DebugLevel, format, i...)
 }
 
-func (l *Logger) Error(user string, i ...interface{}) {
-	l.Log(ErrorLevel, user, i...)
+func (l *Logger) Error(i ...interface{}) {
+	l.Log(ErrorLevel, i...)
 }
 
-func (l *Logger) Errorf(user string, format string, i ...interface{}) {
-	l.Logf(ErrorLevel, user, format, i...)
+func (l *Logger) Errorf(format string, i ...interface{}) {
+	l.Logf(ErrorLevel, format, i...)
 }
 
-func (l *Logger) Warn(user string, i ...interface{}) {
-	l.Log(WarnLevel, user, i...)
+func (l *Logger) Warn(i ...interface{}) {
+	l.Log(WarnLevel, i...)
 }
 
-func (l *Logger) Warnf(user string, format string, i ...interface{}) {
-	l.Logf(WarnLevel, user, format, i...)
+func (l *Logger) Warnf(format string, i ...interface{}) {
+	l.Logf(WarnLevel, format, i...)
 }
 
-func (l *Logger) Fatal(user string, i ...interface{}) {
-	l.Log(FatalLevel, user, i...)
+func (l *Logger) Fatal(i ...interface{}) {
+	l.Log(FatalLevel, i...)
 	os.Exit(1)
 }
 
-func (l *Logger) Fatalf(user string, format string, i ...interface{}) {
-	l.Logf(FatalLevel, user, format, i...)
+func (l *Logger) Fatalf(format string, i ...interface{}) {
+	l.Logf(FatalLevel, format, i...)
 	os.Exit(1)
 }
 
-func (l *Logger) Panic(user string, i ...interface{}) {
-	l.Log(PanicLevel, user, i...)
+func (l *Logger) Panic(i ...interface{}) {
+	l.Log(PanicLevel, i...)
 	panic(fmt.Sprint(i...))
 }
 
-func (l *Logger) Panicf(user string, format string, i ...interface{}) {
-	l.Logf(PanicLevel, user, format, i...)
+func (l *Logger) Panicf(format string, i ...interface{}) {
+	l.Logf(PanicLevel, format, i...)
 	panic(fmt.Sprintf(format, i...))
 }

@@ -59,8 +59,7 @@ func SetWebhookStruct(name string, img string) *discordWebhook {
 	return dw
 }
 
-func SetWebfookMessage(dis *discordWebhook, message string, user string, level string) *discordWebhook {
-	dis.Content = user
+func SetWebfookMessage(dis *discordWebhook, message string, level string) *discordWebhook {
 	dis.Embeds = []discordEmbed{
 		discordEmbed{
 			Title: level,
