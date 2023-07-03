@@ -22,30 +22,10 @@
 
 package slack
 
-import (
-	"encoding/json"
-	"net/http"
-	"net/url"
-)
-
-func SetWebfookMessage(message string, level string, user string) *Payload {
-	sl := &Payload{
-		Username: user,
-		Channel:  "#general",
-		Text:     message,
-	}
-	return sl
-}
-
-func SendLogToSlack(webhookURL string, sw *Payload) (err error) {
-	p, err := json.Marshal(sw)
-	if err != nil {
-		return err
-	}
-	resp, err := http.PostForm(webhookURL, url.Values{"payload": {string(p)}})
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-	return nil
+type Payload struct {
+	Username  string `json:"username,omitempty"`
+	IconUrl   string `json:"icon_url,omitempty"`
+	IconEmoji string `json:"icon_emoji,omitempty"`
+	Channel   string `json:"channel,omitempty"`
+	Text      string `json:"text,omitempty"`
 }
