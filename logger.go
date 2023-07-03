@@ -28,6 +28,7 @@ import (
 	"os"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/seipan/loghook/discord"
 )
@@ -234,9 +235,11 @@ func (l *Logger) Log(level Level, user string, args ...interface{}) {
 		message := ""
 		message = fmt.Sprint(args...)
 
+		text := fmt.Sprintf("time: %s\nuser: %s\nlevel: %s\nmessage: %s\n", time.Now().Format("2006-01-02 15:04:05"), user, level.String(), message)
+
 		l.mutex.Lock()
 		defer l.mutex.Unlock()
-		log.Println(message)
+		log.Println(text)
 
 		webhook := l.resWebhookURLbyLevel(level)
 		if webhook == "nosend" {
@@ -247,7 +250,7 @@ func (l *Logger) Log(level Level, user string, args ...interface{}) {
 
 		// send log to discord or slack
 		dis := discord.SetWebhookStruct(l.Name, l.Img)
-		dis = discord.SetWebfookMessage(dis, message, user, level.String())
+		dis = discord.SetWebfookMessage(dis, text, user, level.String())
 		err := discord.SendLogToDiscord(webhook, dis)
 		if err != nil {
 			fmt.Printf("failed to send log to discord: %v\n", err)
