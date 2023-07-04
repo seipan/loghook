@@ -28,9 +28,10 @@ import (
 	"net/url"
 )
 
-func SetWebfookMessage(message string, level string, user string) *Payload {
+func SetWebfookMessage(message string, level string, user string, img string) *Payload {
 	sl := &Payload{
 		Username: user,
+		IconUrl:  img,
 		Channel:  "#general",
 		Text:     message,
 	}
