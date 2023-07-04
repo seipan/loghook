@@ -75,6 +75,15 @@ func (l *Logger) SetLevel(level Level) {
 }
 
 // Sets the specified url in the webhook for each level
+
+func (l *Logger) SetWebhook(webhook string) {
+	if l.Types == "slack" {
+		l.Slack.SetWebhook(webhook)
+	} else {
+		l.Discord.SetWebhook(webhook)
+	}
+}
+
 func (l *Logger) SetDebugWebhook(webhook string) {
 	if l.Types == "slack" {
 		l.Slack.SetDebugWebhook(webhook)
