@@ -21,3 +21,17 @@
 // SOFTWARE.
 
 package loghook
+
+import "testing"
+
+var (
+	// DiscordWebhookURL is a webhook url for discord.
+	DiscordWebhookURL = "https://discordapp.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz"
+)
+
+func TestDiscordExample(t *testing.T) {
+	logger := NewLogger("https://test.png", "test", "discord")
+	logger.SetWebhook(DiscordWebhookURL)
+
+	logger.Info("test")
+}
