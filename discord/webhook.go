@@ -61,7 +61,7 @@ func SetWebhookStruct(name string, img string) *discordWebhook {
 
 func SetWebfookMessage(dis *discordWebhook, message string, level string) *discordWebhook {
 	dis.Embeds = []discordEmbed{
-		discordEmbed{
+		{
 			Title: level,
 			Desc:  message,
 			Color: 0x550000,
