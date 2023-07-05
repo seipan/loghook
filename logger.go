@@ -53,12 +53,14 @@ type Logger struct {
 	Name string
 }
 
-func NewLogger(img string, name string, types string) *Logger {
+func NewLogger(img string, name string, types string, webhook string) *Logger {
 	return &Logger{
-		level: InfoLevel,
-		Img:   img,
-		Name:  name,
-		Types: types,
+		level:   InfoLevel,
+		Img:     img,
+		Name:    name,
+		Types:   types,
+		Slack:   NewSlack(webhook),
+		Discord: NewDiscord(webhook),
 	}
 }
 
@@ -244,11 +246,11 @@ func (l *Logger) Log(level Level, args ...interface{}) {
 		message := ""
 		message = fmt.Sprint(args...)
 
-		text := fmt.Sprintf("\"time\": %s \"level\": %s \"message\" : %s\n", time.Now().Format("2006-01-02 15:04:05"), level.String(), message)
+		text := fmt.Sprintf("{\"time\": %s , \"level\": %s , \"message\" : %s}", time.Now().Format("2006-01-02 15:04:05"), level.String(), message)
 
 		l.mutex.Lock()
 		defer l.mutex.Unlock()
-		log.Println(text)
+		fmt.Println(text)
 
 		webhook := l.resWebhookURLbyLevel(level)
 		if webhook == "nosend" {
