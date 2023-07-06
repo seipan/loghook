@@ -32,7 +32,6 @@ func SetWebfookMessage(message string, level string, user string, img string) *P
 	sl := &Payload{
 		Username: user,
 		IconUrl:  img,
-		Channel:  "#general",
 		Text:     message,
 	}
 	return sl
