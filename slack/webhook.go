@@ -37,7 +37,7 @@ func SetWebfookMessage(message string, level string, user string, img string) *P
 	return sl
 }
 
-func SendLogToSlack(webhookURL string, sw *Payload) (err error) {
+func SendLogToSlack(webhookURL string, sw *Payload) error {
 	p, err := json.Marshal(sw)
 	if err != nil {
 		return err
