@@ -31,6 +31,7 @@ import (
 	"time"
 
 	"github.com/seipan/loghook/discord"
+	"github.com/seipan/loghook/slack"
 )
 
 // This structure defines what is needed to output logs to any channel on discord or slack.
@@ -260,12 +261,21 @@ func (l *Logger) Log(level Level, args ...interface{}) {
 		}
 
 		// send log to discord or slack
-		dis := discord.SetWebhookStruct(l.Name, l.Img)
-		dis = discord.SetWebfookMessage(dis, text, level.String())
-		err := discord.SendLogToDiscord(webhook, dis)
-		if err != nil {
-			fmt.Printf("failed to send log to discord: %v\n", err)
+		if l.Types == "discord" {
+			dis := discord.SetWebhookStruct(l.Name, l.Img)
+			dis = discord.SetWebfookMessage(dis, text, level.String())
+			err := discord.SendLogToDiscord(webhook, dis)
+			if err != nil {
+				fmt.Printf("failed to send log to discord: %v\n", err)
+			}
+		} else if l.Types == "slack" {
+			sl := slack.SetWebfookMessage(text, level.String(), l.Name, l.Img)
+			err := slack.SendLogToSlack(webhook, sl)
+			if err != nil {
+				fmt.Printf("failed to send log to slack: %v\n", err)
+			}
 		}
+
 	}
 }
 
