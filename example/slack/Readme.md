@@ -28,3 +28,6 @@ func main() {
 }
 
 ```
+
+## Result
+![image](https://github.com/seipan/loghook/assets/88176012/190c5319-71be-4a28-83e7-c235f201f9ea)
