@@ -29,4 +29,4 @@ func main() {
 ```
 
 ## Result 
-![image](https://github.com/seipan/loghook/assets/88176012/21df8955-a7d1-4e8b-87f0-5fd166111a8f)
+![image](https://github.com/seipan/loghook/assets/88176012/958fdb38-a61d-4668-85c9-3166595db1a8)
