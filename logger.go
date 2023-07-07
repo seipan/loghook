@@ -24,7 +24,6 @@ package loghook
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"sync"
 	"sync/atomic"
@@ -284,9 +283,11 @@ func (l *Logger) Logf(level Level, format string, args ...interface{}) {
 		message := ""
 		message = fmt.Sprintf(format, args...)
 
+		text := fmt.Sprintf("{\"time\": %s , \"level\": %s , \"message\" : %s}", time.Now().Format("2006-01-02 15:04:05"), level.String(), message)
+
 		l.mutex.Lock()
 		defer l.mutex.Unlock()
-		log.Println(message)
+		fmt.Println(text)
 
 		webhook := l.resWebhookURLbyLevel(level)
 		if webhook == "nosend" {
@@ -296,9 +297,20 @@ func (l *Logger) Logf(level Level, format string, args ...interface{}) {
 		}
 
 		// send log to discord or slack
-		dis := discord.SetWebhookStruct(l.Name, l.Img)
-		dis = discord.SetWebfookMessage(dis, message, level.String())
-		discord.SendLogToDiscord(webhook, dis)
+		if l.Types == "discord" {
+			dis := discord.SetWebhookStruct(l.Name, l.Img)
+			dis = discord.SetWebfookMessage(dis, text, level.String())
+			err := discord.SendLogToDiscord(webhook, dis)
+			if err != nil {
+				fmt.Printf("failed to send log to discord: %v\n", err)
+			}
+		} else if l.Types == "slack" {
+			sl := slack.SetWebfookMessage(text, level.String(), l.Name, l.Img)
+			err := slack.SendLogToSlack(webhook, sl)
+			if err != nil {
+				fmt.Printf("failed to send log to slack: %v\n", err)
+			}
+		}
 	}
 }
 
