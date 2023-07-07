@@ -38,6 +38,7 @@ func main() {
 	logger.Error("test")
 }
 ```
+If you want a more detailed example, please see the [examples](https://github.com/seipan/loghook/blob/main/example).
 ## License
 Code licensed under 
 [the MIT License](https://github.com/seipan/loghook/blob/main/LICENSE).
