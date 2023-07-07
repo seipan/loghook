@@ -1,5 +1,5 @@
 ## Example
-
+Create a WebhookuURL using Incoming Webhook
 ```go
 package slack
 
@@ -22,6 +22,9 @@ func main() {
 	logger.Debug("test")
 	logger.NoSendInfo()
 	logger.Infof("test %s", "info")
+
+	logger.SetErrorWebhook(SlackErrorWebhookURL)
+	logger.Error("test")
 }
 
 ```

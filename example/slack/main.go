@@ -4,7 +4,8 @@ import "github.com/seipan/loghook"
 
 var (
 	// DiscordWebhookURL is a webhook url for discord.
-	SlackWebhookURL = "https://hooks.slack.com/services/xxxxx/xxxx/xxxxxxxxx"
+	SlackWebhookURL      = "https://hooks.slack.com/services/xxxxx/xxxx/xxxxxxxxx"
+	SlackErrorWebhookURL = "https://hooks.slack.com/services/xxxxx/xxxx/xxxxxxxxx"
 )
 
 func main() {
@@ -19,4 +20,7 @@ func main() {
 	logger.Debug("test")
 	logger.NoSendInfo()
 	logger.Infof("test %s", "info")
+
+	logger.SetErrorWebhook(SlackErrorWebhookURL)
+	logger.Error("test")
 }

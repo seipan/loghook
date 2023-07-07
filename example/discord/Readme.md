@@ -22,5 +22,8 @@ func main() {
 	logger.Debug("test")
 	logger.NoSendInfo()
 	logger.Infof("test %s", "info")
+
+    logger.SetErrorWebhook(DiscordErrorWebhookURL)
+	logger.Error("test")
 }
 ```
