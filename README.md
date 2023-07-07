@@ -10,6 +10,7 @@ go get github.com/seipan/loghook
 ```
 
 ## Usage
+When using it, you need to obtain the default webhook for discord and the incoming webhook for slack in advance.
 ```go
 package salck
 
@@ -37,3 +38,6 @@ func main() {
 	logger.Error("test")
 }
 ```
+## License
+Code licensed under 
+[the MIT License](https://github.com/seipan/loghook/blob/main/LICENSE).
