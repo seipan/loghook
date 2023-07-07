@@ -26,7 +26,10 @@ import "testing"
 
 var (
 	// DiscordWebhookURL is a webhook url for discord.
-	DiscordWebhookURL = "https://discord.com/api/webhooks/xxxxxxxxx/xxxxxxxxxxxxxxxxxxx"
+	DiscordWebhookURL = "https://discord.com/api/webhooks/xxxxxxxx/xxxxxxxx"
+
+	// SlackWebhookURL is a webhook url for slack.
+	SlackWebhookURL = "https://hooks.slack.com/services/xxxxx/xxxx/xxxxxxxxx"
 )
 
 func TestDiscordExample(t *testing.T) {
@@ -36,5 +39,15 @@ func TestDiscordExample(t *testing.T) {
 
 	logger.NoSendDebug()
 	logger.Debug("test")
+	logger.NoSendInfo()
+	logger.Infof("test %s", "info")
+}
 
+func TestSlackExample(t *testing.T) {
+	logger := NewLogger("", "test", "slack", SlackWebhookURL)
+	logger.SetLevel(DebugLevel)
+	logger.SetWebhook(SlackWebhookURL)
+
+	logger.NoSendDebug()
+	logger.Debugf("test %s", "debug")
 }
