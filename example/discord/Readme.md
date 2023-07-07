@@ -1,7 +1,7 @@
 ## Example
 
 ```go
-package salck
+package slack
 
 import "github.com/seipan/loghook"
 
@@ -27,3 +27,6 @@ func main() {
 	logger.Error("test")
 }
 ```
+
+## Result 
+![image](https://github.com/seipan/loghook/assets/88176012/21df8955-a7d1-4e8b-87f0-5fd166111a8f)
