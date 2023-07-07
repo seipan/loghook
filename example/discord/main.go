@@ -1,4 +1,4 @@
-package salck
+package discord
 
 import "github.com/seipan/loghook"
 
