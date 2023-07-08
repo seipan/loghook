@@ -12,7 +12,7 @@ go get github.com/seipan/loghook
 ## Usage
 When using it, you need to obtain the default webhook for discord and the incoming webhook for slack in advance.
 ```go
-package salck
+package discord
 
 import "github.com/seipan/loghook"
 
