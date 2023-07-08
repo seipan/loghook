@@ -22,7 +22,9 @@
 
 package loghook
 
-import "testing"
+import (
+	"testing"
+)
 
 var (
 	// DiscordWebhookURL is a webhook url for discord.
