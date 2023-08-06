@@ -25,63 +25,91 @@ package loghook
 // This structure Discord holds the webhook url for logging to discord.
 type Discord struct {
 	// This is the webhook url of the channel for which you want to send notifications to the discord.
-	Webhook string
+	webhook string
 
 	// This is the webhook url for debug level log
-	DebugWebhook string
+	debugWebhook string
 
 	// This is the webhook url for info level log
-	InfoWebhook string
+	infoWebhook string
 
 	// This is the webhook url for warn level log
-	WarnWebhook string
+	warnWebhook string
 
 	// This is the webhook url for error level log
-	ErrorWebhook string
+	errorWebhook string
 
 	// This is the webhook url for panic level log
-	PanicWebhook string
+	panicWebhook string
 
 	// This is the webhook url for fatal level log
-	FatalWebhook string
+	fatalWebhook string
 }
 
 func NewDiscord(webhook string) *Discord {
-	return &Discord{Webhook: webhook}
+	return &Discord{webhook: webhook}
+}
+
+func (d *Discord) Webhook() string {
+	return d.webhook
+}
+
+func (d *Discord) DebugWebhook() string {
+	return d.debugWebhook
+}
+
+func (d *Discord) InfoWebhook() string {
+	return d.infoWebhook
+}
+
+func (d *Discord) WarnWebhook() string {
+	return d.warnWebhook
+}
+
+func (d *Discord) ErrorWebhook() string {
+	return d.errorWebhook
+}
+
+func (d *Discord) PanicWebhook() string {
+	return d.panicWebhook
+}
+
+func (d *Discord) FatalWebhook() string {
+	return d.fatalWebhook
 }
 
 // Sets the webhook url.
 // This url will be used if the webhook url for any level is not set
 func (d *Discord) SetWebhook(webhook string) {
-	d.Webhook = webhook
+	d.webhook = webhook
 }
 
 // Set the webhookurl for the Debug level.
 func (d *Discord) SetDebugWebhook(webhook string) {
-	d.DebugWebhook = webhook
+	d.debugWebhook = webhook
 }
 
 // Set the webhookurl for the Info level.
 func (d *Discord) SetInfoWebhook(webhook string) {
-	d.InfoWebhook = webhook
+	d.infoWebhook = webhook
 }
 
 // Set the webhookurl for the Warn level.
 func (d *Discord) SetWarnWebhook(webhook string) {
-	d.WarnWebhook = webhook
+	d.warnWebhook = webhook
 }
 
 // Set the webhookurl for the Error level.
 func (d *Discord) SetErrorWebhook(webhook string) {
-	d.ErrorWebhook = webhook
+	d.errorWebhook = webhook
 }
 
 // Set the webhookurl for the Panic level.
 func (d *Discord) SetPanicWebhook(webhook string) {
-	d.PanicWebhook = webhook
+	d.panicWebhook = webhook
 }
 
 // Set the webhookurl for the Fatal level.
 func (d *Discord) SetFatalWebhook(webhook string) {
-	d.FatalWebhook = webhook
+	d.fatalWebhook = webhook
 }
