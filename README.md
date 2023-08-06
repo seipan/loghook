@@ -12,7 +12,7 @@ go get github.com/seipan/loghook
 ## Usage
 When using it, you need to obtain the default webhook for discord and the incoming webhook for slack in advance.
 ```go
-package salck
+package discord
 
 import "github.com/seipan/loghook"
 
@@ -28,13 +28,22 @@ func main() {
 
 	logger.Debug("test")
 	logger.Infof("test %s", "info")
+}
+```
 
+If you do not want to be notified of a particular log level, you can set
+```go
+func main(){
 	logger.NoSendDebug()
 	logger.Debug("test")
 	logger.NoSendInfo()
 	logger.Infof("test %s", "info")
-
-    logger.SetErrorWebhook(DiscordErrorWebhookURL)
+}
+```
+You can also change the webhook to be notified for each log level
+```go
+func main(){
+	logger.SetErrorWebhook(DiscordErrorWebhookURL)
 	logger.Error("test")
 }
 ```
