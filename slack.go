@@ -26,63 +26,91 @@ package loghook
 // This webhook assumes that the Incoming Webhook is used.
 type Slack struct {
 	// This is the webhook url of the channel for which you want to send notifications to the slack.
-	Webhook string
+	webhook string
 
 	// This is the webhook url for debug level log
-	DebugWebhook string
+	debugWebhook string
 
 	// This is the webhook url for info level log
-	InfoWebhook string
+	infoWebhook string
 
 	// This is the webhook url for warn level log
-	WarnWebhook string
+	warnWebhook string
 
 	// This is the webhook url for error level log
-	ErrorWebhook string
+	errorWebhook string
 
 	// This is the webhook url for panic level log
-	PanicWebhook string
+	panicWebhook string
 
 	// This is the webhook url for fatal level log
-	FatalWebhook string
+	fatalWebhook string
 }
 
 func NewSlack(webhook string) *Slack {
-	return &Slack{Webhook: webhook}
+	return &Slack{webhook: webhook}
+}
+
+func (s *Slack) Webhook() string {
+	return s.webhook
+}
+
+func (s *Slack) DebugWebhook() string {
+	return s.debugWebhook
+}
+
+func (s *Slack) InfoWebhook() string {
+	return s.infoWebhook
+}
+
+func (s *Slack) WarnWebhook() string {
+	return s.warnWebhook
+}
+
+func (s *Slack) ErrorWebhook() string {
+	return s.errorWebhook
+}
+
+func (s *Slack) PanicWebhook() string {
+	return s.panicWebhook
+}
+
+func (s *Slack) FatalWebhook() string {
+	return s.fatalWebhook
 }
 
 // Sets the webhook url.
 // This url will be used if the webhook url for any level is not set
 func (s *Slack) SetWebhook(webhook string) {
-	s.Webhook = webhook
+	s.webhook = webhook
 }
 
 // Set the webhookurl for the Debug level.
 func (s *Slack) SetDebugWebhook(webhook string) {
-	s.DebugWebhook = webhook
+	s.debugWebhook = webhook
 }
 
 // Set the webhookurl for the Info level.
 func (s *Slack) SetInfoWebhook(webhook string) {
-	s.InfoWebhook = webhook
+	s.infoWebhook = webhook
 }
 
 // Set the webhookurl for the Warn level.
 func (s *Slack) SetWarnWebhook(webhook string) {
-	s.WarnWebhook = webhook
+	s.warnWebhook = webhook
 }
 
 // Set the webhookurl for the Error level.
 func (s *Slack) SetErrorWebhook(webhook string) {
-	s.ErrorWebhook = webhook
+	s.errorWebhook = webhook
 }
 
 // Set the webhookurl for the Panic level.
 func (s *Slack) SetPanicWebhook(webhook string) {
-	s.PanicWebhook = webhook
+	s.panicWebhook = webhook
 }
 
 // Set the webhookurl for the Fatal level.
 func (s *Slack) SetFatalWebhook(webhook string) {
-	s.FatalWebhook = webhook
+	s.fatalWebhook = webhook
 }

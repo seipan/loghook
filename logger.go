@@ -142,17 +142,17 @@ func (l *Logger) resWebhookURLbyLevel(level Level) string {
 	if l.Types == "slack" {
 		switch level {
 		case DebugLevel:
-			return l.Slack.DebugWebhook
+			return l.Slack.DebugWebhook()
 		case InfoLevel:
-			return l.Slack.InfoWebhook
+			return l.Slack.InfoWebhook()
 		case WarnLevel:
-			return l.Slack.WarnWebhook
+			return l.Slack.WarnWebhook()
 		case ErrorLevel:
-			return l.Slack.ErrorWebhook
+			return l.Slack.ErrorWebhook()
 		case PanicLevel:
-			return l.Slack.PanicWebhook
+			return l.Slack.PanicWebhook()
 		case FatalLevel:
-			return l.Slack.FatalWebhook
+			return l.Slack.FatalWebhook()
 		default:
 			return "unknown"
 		}
@@ -178,7 +178,7 @@ func (l *Logger) resWebhookURLbyLevel(level Level) string {
 
 func (l *Logger) Webhook() string {
 	if l.Types == "slack" {
-		return l.Slack.Webhook
+		return l.Slack.Webhook()
 	} else {
 		return l.Discord.Webhook
 	}
@@ -187,7 +187,7 @@ func (l *Logger) Webhook() string {
 // nosend webhook method.
 func (l *Logger) NoSendWebhook() {
 	if l.Types == "slack" {
-		l.Slack.Webhook = "nosend"
+		l.Slack.SetWebhook("nosend")
 	} else {
 		l.Discord.Webhook = "nosend"
 	}
@@ -195,7 +195,7 @@ func (l *Logger) NoSendWebhook() {
 
 func (l *Logger) NoSendInfo() {
 	if l.Types == "slack" {
-		l.Slack.InfoWebhook = "nosend"
+		l.Slack.SetInfoWebhook("nosend")
 	} else {
 		l.Discord.InfoWebhook = "nosend"
 	}
@@ -203,7 +203,7 @@ func (l *Logger) NoSendInfo() {
 
 func (l *Logger) NoSendDebug() {
 	if l.Types == "slack" {
-		l.Slack.DebugWebhook = "nosend"
+		l.Slack.SetDebugWebhook("nosend")
 	} else {
 		l.Discord.DebugWebhook = "nosend"
 	}
@@ -211,7 +211,7 @@ func (l *Logger) NoSendDebug() {
 
 func (l *Logger) NoSendWarn() {
 	if l.Types == "slack" {
-		l.Slack.WarnWebhook = "nosend"
+		l.Slack.SetWarnWebhook("nosend")
 	} else {
 		l.Discord.WarnWebhook = "nosend"
 	}
@@ -219,7 +219,7 @@ func (l *Logger) NoSendWarn() {
 
 func (l *Logger) NoSendError() {
 	if l.Types == "slack" {
-		l.Slack.ErrorWebhook = "nosend"
+		l.Slack.SetErrorWebhook("nosend")
 	} else {
 		l.Discord.ErrorWebhook = "nosend"
 	}
@@ -227,7 +227,7 @@ func (l *Logger) NoSendError() {
 
 func (l *Logger) NoSendPanic() {
 	if l.Types == "slack" {
-		l.Slack.PanicWebhook = "nosend"
+		l.Slack.SetPanicWebhook("nosend")
 	} else {
 		l.Discord.PanicWebhook = "nosend"
 	}
@@ -235,7 +235,7 @@ func (l *Logger) NoSendPanic() {
 
 func (l *Logger) NoSendFatal() {
 	if l.Types == "slack" {
-		l.Slack.FatalWebhook = "nosend"
+		l.Slack.SetFatalWebhook("nosend")
 	} else {
 		l.Discord.FatalWebhook = "nosend"
 	}
