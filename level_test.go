@@ -21,3 +21,27 @@
 // SOFTWARE.
 
 package loghook
+
+import "testing"
+
+func Test_String(t *testing.T) {
+	tests := []struct {
+		name       Level
+		reqmessage string
+	}{
+		{
+			name:       InfoLevel,
+			reqmessage: "info",
+		},
+		{
+			name:       ErrorLevel,
+			reqmessage: "level",
+		},
+	}
+
+	for _, tt := range tests {
+		if tt.reqmessage != tt.name.String() {
+			t.Error("level to string err")
+		}
+	}
+}
