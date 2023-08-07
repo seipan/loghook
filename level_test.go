@@ -35,7 +35,7 @@ func Test_String(t *testing.T) {
 		},
 		{
 			name:       ErrorLevel,
-			reqmessage: "level",
+			reqmessage: "error",
 		},
 	}
 
