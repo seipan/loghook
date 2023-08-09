@@ -24,7 +24,7 @@ package loghook
 
 import "testing"
 
-func Test_String(t *testing.T) {
+func TestString(t *testing.T) {
 	tests := []struct {
 		name       string
 		level      Level
@@ -43,7 +43,9 @@ func Test_String(t *testing.T) {
 	}
 
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 			if tt.reqmessage != tt.level.String() {
 				t.Error("level to string err")
 			}
@@ -70,13 +72,16 @@ func TestParseLevel(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		res, err := ParseLevel(tt.reqstr)
-		if err != nil {
-			t.Error(err)
-		}
-
-		if tt.reqlvl != res {
-			t.Errorf("parse level err want %v, got %v", tt.reqlvl, res)
-		}
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			res, err := ParseLevel(tt.reqstr)
+			if err != nil {
+				t.Error(err)
+			}
+			if tt.reqlvl != res {
+				t.Errorf("parse level err want %v, got %v", tt.reqlvl, res)
+			}
+		})
 	}
 }
