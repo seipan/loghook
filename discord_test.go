@@ -21,3 +21,31 @@
 // SOFTWARE.
 
 package loghook
+
+import "testing"
+
+func TestDiscord(t *testing.T) {
+	tests := []struct {
+		name    string
+		webhook string
+	}{
+		{
+			name:    "success info webhook",
+			webhook: "https://hogehogeinfo.com",
+		},
+		{
+			name:    "success error webhook",
+			webhook: "https://hogehogeerror.com",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			discord := NewDiscord(tt.webhook)
+			if discord.Webhook() != tt.webhook {
+				t.Error("webhook err")
+			}
+		})
+	}
+}
