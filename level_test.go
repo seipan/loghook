@@ -26,22 +26,57 @@ import "testing"
 
 func Test_String(t *testing.T) {
 	tests := []struct {
-		name       Level
+		name       string
+		level      Level
 		reqmessage string
 	}{
 		{
-			name:       InfoLevel,
+			name:       "success info level",
+			level:      InfoLevel,
 			reqmessage: "info",
 		},
 		{
-			name:       ErrorLevel,
+			name:       "success error level",
+			level:      ErrorLevel,
 			reqmessage: "error",
 		},
 	}
 
 	for _, tt := range tests {
-		if tt.reqmessage != tt.name.String() {
-			t.Error("level to string err")
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.reqmessage != tt.level.String() {
+				t.Error("level to string err")
+			}
+		})
+	}
+}
+
+func TestParseLevel(t *testing.T) {
+	tests := []struct {
+		name   string
+		reqlvl Level
+		reqstr string
+	}{
+		{
+			name:   "success info level",
+			reqlvl: InfoLevel,
+			reqstr: "info",
+		},
+		{
+			name:   "success error level",
+			reqlvl: ErrorLevel,
+			reqstr: "error",
+		},
+	}
+
+	for _, tt := range tests {
+		res, err := ParseLevel(tt.reqstr)
+		if err != nil {
+			t.Error(err)
+		}
+
+		if tt.reqlvl != res {
+			t.Errorf("parse level err want %v, got %v", tt.reqlvl, res)
 		}
 	}
 }
