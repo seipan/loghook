@@ -4,3 +4,5 @@ ci:
 - .github/*
 slack:
 - slack/*
+logger:
+- /**/*
