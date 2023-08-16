@@ -1,0 +1,8 @@
+discord:
+- discord/**/*
+ci:
+- .github/**/*
+slack:
+- slack/**/*
+logger:
+- /**/*
