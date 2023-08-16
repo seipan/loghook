@@ -23,6 +23,7 @@
 package loghook
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"sync"
@@ -323,12 +324,20 @@ func (l *Logger) Infof(format string, i ...interface{}) {
 	l.Logf(InfoLevel, format, i...)
 }
 
+func (l *Logger) InfoContext(ctx context.Context, format string, i ...interface{}) {
+	l.Logf(InfoLevel, format, i...)
+}
+
 func (l *Logger) Debug(i ...interface{}) {
 	l.Log(DebugLevel, i...)
 }
 
 func (l *Logger) Debugf(format string, i ...interface{}) {
 	l.Logf(DebugLevel, format, i...)
+}
+
+func (l *Logger) DebugContext(ctx context.Context, i ...interface{}) {
+	l.Log(DebugLevel, i...)
 }
 
 func (l *Logger) Error(i ...interface{}) {
@@ -339,12 +348,20 @@ func (l *Logger) Errorf(format string, i ...interface{}) {
 	l.Logf(ErrorLevel, format, i...)
 }
 
+func (l *Logger) ErrorContext(ctx context.Context, i ...interface{}) {
+	l.Log(ErrorLevel, i...)
+}
+
 func (l *Logger) Warn(i ...interface{}) {
 	l.Log(WarnLevel, i...)
 }
 
 func (l *Logger) Warnf(format string, i ...interface{}) {
 	l.Logf(WarnLevel, format, i...)
+}
+
+func (l *Logger) WarnContext(ctx context.Context, i ...interface{}) {
+	l.Log(WarnLevel, i...)
 }
 
 func (l *Logger) Fatal(i ...interface{}) {
@@ -357,6 +374,11 @@ func (l *Logger) Fatalf(format string, i ...interface{}) {
 	os.Exit(1)
 }
 
+func (l *Logger) FatalContext(ctx context.Context, i ...interface{}) {
+	l.Log(FatalLevel, i...)
+	os.Exit(1)
+}
+
 func (l *Logger) Panic(i ...interface{}) {
 	l.Log(PanicLevel, i...)
 	panic(fmt.Sprint(i...))
@@ -365,4 +387,9 @@ func (l *Logger) Panic(i ...interface{}) {
 func (l *Logger) Panicf(format string, i ...interface{}) {
 	l.Logf(PanicLevel, format, i...)
 	panic(fmt.Sprintf(format, i...))
+}
+
+func (l *Logger) PanicContext(ctx context.Context, i ...interface{}) {
+	l.Log(PanicLevel, i...)
+	panic(fmt.Sprint(i...))
 }
