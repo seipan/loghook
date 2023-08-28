@@ -1,3 +1,5 @@
+[![go](https://github.com/seipan/loghook/actions/workflows/go.yml/badge.svg)](https://github.com/seipan/loghook/actions/workflows/go.yml)
+
 ## loghook
 <div align="center">
 <img src="img/logo.png" alt="属性" title="タイトル">
