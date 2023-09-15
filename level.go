@@ -45,8 +45,6 @@ const (
 	PanicLevel
 	// FatalLevel logs a message, then calls os.Exit(1).
 	FatalLevel
-
-	// In this logger, the lowest log level is Debug level and the highest level is Fatal Level
 )
 
 // Converts log level to string, returns unknown if log level is not expected.
