@@ -85,3 +85,32 @@ func TestParseLevel(t *testing.T) {
 		})
 	}
 }
+
+func TestMarshalText(t *testing.T) {
+	tests := []struct {
+		name   string
+		reqlvl Level
+		reqstr string
+	}{
+		{
+			name:   "success info level",
+			reqlvl: InfoLevel,
+			reqstr: "info",
+		},
+		{
+			name:   "success error level",
+			reqlvl: ErrorLevel,
+			reqstr: "error",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			res := tt.reqlvl.MarshalText()
+			if tt.reqstr != string(res) {
+				t.Errorf("marshal text err want %v, got %v", tt.reqstr, string(res))
+			}
+		})
+	}
+}
