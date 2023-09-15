@@ -110,3 +110,30 @@ func TestMarshalText(t *testing.T) {
 		})
 	}
 }
+
+func TestUppercaseString(t *testing.T) {
+	tests := []struct {
+		name   string
+		reqlvl Level
+		reqstr string
+	}{
+		{
+			name:   "success info level",
+			reqlvl: InfoLevel,
+			reqstr: "INFO",
+		},
+		{
+			name:   "success error level",
+			reqlvl: ErrorLevel,
+			reqstr: "ERROR",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			res := tt.reqlvl.UppercaseString()
+			assert.Equal(t, tt.reqstr, res)
+		})
+	}
+}
