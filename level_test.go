@@ -22,7 +22,11 @@
 
 package loghook
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestString(t *testing.T) {
 	tests := []struct {
@@ -46,9 +50,7 @@ func TestString(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			if tt.reqmessage != tt.level.String() {
-				t.Error("level to string err")
-			}
+			assert.Equal(t, tt.reqmessage, tt.level.String())
 		})
 	}
 }
@@ -76,12 +78,35 @@ func TestParseLevel(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			res, err := ParseLevel(tt.reqstr)
-			if err != nil {
-				t.Error(err)
-			}
-			if tt.reqlvl != res {
-				t.Errorf("parse level err want %v, got %v", tt.reqlvl, res)
-			}
+			assert.NoError(t, err)
+			assert.Equal(t, tt.reqlvl, res)
+		})
+	}
+}
+
+func TestMarshalText(t *testing.T) {
+	tests := []struct {
+		name   string
+		reqlvl Level
+		reqstr string
+	}{
+		{
+			name:   "success info level",
+			reqlvl: InfoLevel,
+			reqstr: "info",
+		},
+		{
+			name:   "success error level",
+			reqlvl: ErrorLevel,
+			reqstr: "error",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			res := tt.reqlvl.MarshalText()
+			assert.Equal(t, tt.reqstr, res)
 		})
 	}
 }
