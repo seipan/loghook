@@ -47,8 +47,6 @@ const (
 	FatalLevel
 
 	// In this logger, the lowest log level is Debug level and the highest level is Fatal Level
-	_minLevel = DebugLevel
-	_maxLevel = FatalLevel
 )
 
 // Converts log level to string, returns unknown if log level is not expected.
