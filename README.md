@@ -1,11 +1,23 @@
+<div align="center">
+
+![Last commit](https://img.shields.io/github/last-commit/seipan/loghook?style=flat-square)
+![Repository Stars](https://img.shields.io/github/stars/seipan/loghook?style=flat-square)
+![Issues](https://img.shields.io/github/issues/seipan/loghook?style=flat-square)
+![Open Issues](https://img.shields.io/github/issues-raw/seipan/loghook?style=flat-square)
 [![go](https://github.com/seipan/loghook/actions/workflows/go.yml/badge.svg)](https://github.com/seipan/loghook/actions/workflows/go.yml)
 
-## loghook
-<div align="center">
-<img src="img/logo.png" alt="属性" title="タイトル">
+<img src="img/logo.png" alt="eyecatch" height="300">
+
+# loghook
+
+⭐  logger to notify logs to slack,discord using webhook   ⭐
+
+<br>
+<br>
+
+
 </div>
 
- logger to notify logs to slack,discord using webhook 
 ## Installation
 ```
 go get github.com/seipan/loghook
