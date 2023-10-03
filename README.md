@@ -6,11 +6,11 @@
 ![Open Issues](https://img.shields.io/github/issues-raw/seipan/loghook?style=flat-square)
 [![go](https://github.com/seipan/loghook/actions/workflows/go.yml/badge.svg)](https://github.com/seipan/loghook/actions/workflows/go.yml)
 
-<img src="img/logo.png" alt="eyecatch" height="300">
+<img src="img/logo.png" alt="eyecatch" height="250">
 
 # loghook
 
-⭐  logger to notify logs to slack,discord using webhook   ⭐
+⚡  logger to notify logs to slack,discord using webhook   ⚡
 
 <br>
 <br>
