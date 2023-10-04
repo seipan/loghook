@@ -23,6 +23,7 @@
 package loghook
 
 import (
+	"context"
 	"testing"
 )
 
@@ -41,8 +42,10 @@ func TestDiscordExample(t *testing.T) {
 
 	logger.NoSendDebug()
 	logger.Debug("test")
+	logger.DebugContext(context.Background(), "test")
 	logger.NoSendInfo()
 	logger.Infof("test %s", "info")
+	logger.InfoContext(context.Background(), "test")
 }
 
 func TestSlackExample(t *testing.T) {
@@ -52,4 +55,5 @@ func TestSlackExample(t *testing.T) {
 
 	logger.NoSendDebug()
 	logger.Debugf("test %s", "debug")
+	logger.DebugContext(context.Background(), "test")
 }
