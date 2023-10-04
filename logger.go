@@ -23,6 +23,7 @@
 package loghook
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"sync"
@@ -64,7 +65,7 @@ func NewLogger(img string, name string, types string, webhook string) *Logger {
 	}
 }
 
-func (l *Logger) check(level Level) bool {
+func (l *Logger) check(ctx context.Context, level Level) bool {
 	return (l.checkTypes() && l.Level() <= level)
 }
 
@@ -241,8 +242,8 @@ func (l *Logger) NoSendFatal() {
 	}
 }
 
-func (l *Logger) Log(level Level, args ...interface{}) {
-	if l.check(level) {
+func (l *Logger) Log(ctx context.Context, level Level, args ...interface{}) {
+	if l.check(ctx, level) {
 		message := ""
 		message = fmt.Sprint(args...)
 
@@ -278,8 +279,8 @@ func (l *Logger) Log(level Level, args ...interface{}) {
 	}
 }
 
-func (l *Logger) Logf(level Level, format string, args ...interface{}) {
-	if l.check(level) {
+func (l *Logger) Logf(ctx context.Context, level Level, format string, args ...interface{}) {
+	if l.check(ctx, level) {
 		message := ""
 		message = fmt.Sprintf(format, args...)
 
@@ -315,54 +316,80 @@ func (l *Logger) Logf(level Level, format string, args ...interface{}) {
 }
 
 func (l *Logger) Info(i ...interface{}) {
-	l.Log(InfoLevel, i...)
+	l.Log(context.Background(), InfoLevel, i...)
 
 }
 
 func (l *Logger) Infof(format string, i ...interface{}) {
-	l.Logf(InfoLevel, format, i...)
+	l.Logf(context.Background(), InfoLevel, format, i...)
+}
+
+func (l *Logger) InfoContext(ctx context.Context, format string, i ...interface{}) {
+	l.Logf(ctx, InfoLevel, format, i...)
 }
 
 func (l *Logger) Debug(i ...interface{}) {
-	l.Log(DebugLevel, i...)
+	l.Log(context.Background(), DebugLevel, i...)
 }
 
 func (l *Logger) Debugf(format string, i ...interface{}) {
-	l.Logf(DebugLevel, format, i...)
+	l.Logf(context.Background(), DebugLevel, format, i...)
+}
+
+func (l *Logger) DebugContext(ctx context.Context, i ...interface{}) {
+	l.Log(ctx, DebugLevel, i...)
 }
 
 func (l *Logger) Error(i ...interface{}) {
-	l.Log(ErrorLevel, i...)
+	l.Log(context.Background(), ErrorLevel, i...)
 }
 
 func (l *Logger) Errorf(format string, i ...interface{}) {
-	l.Logf(ErrorLevel, format, i...)
+	l.Logf(context.Background(), ErrorLevel, format, i...)
+}
+
+func (l *Logger) ErrorContext(ctx context.Context, i ...interface{}) {
+	l.Log(ctx, ErrorLevel, i...)
 }
 
 func (l *Logger) Warn(i ...interface{}) {
-	l.Log(WarnLevel, i...)
+	l.Log(context.Background(), WarnLevel, i...)
 }
 
 func (l *Logger) Warnf(format string, i ...interface{}) {
-	l.Logf(WarnLevel, format, i...)
+	l.Logf(context.Background(), WarnLevel, format, i...)
+}
+
+func (l *Logger) WarnContext(ctx context.Context, i ...interface{}) {
+	l.Log(ctx, WarnLevel, i...)
 }
 
 func (l *Logger) Fatal(i ...interface{}) {
-	l.Log(FatalLevel, i...)
+	l.Log(context.Background(), FatalLevel, i...)
 	os.Exit(1)
 }
 
 func (l *Logger) Fatalf(format string, i ...interface{}) {
-	l.Logf(FatalLevel, format, i...)
+	l.Logf(context.Background(), FatalLevel, format, i...)
+	os.Exit(1)
+}
+
+func (l *Logger) FatalContext(ctx context.Context, i ...interface{}) {
+	l.Log(ctx, FatalLevel, i...)
 	os.Exit(1)
 }
 
 func (l *Logger) Panic(i ...interface{}) {
-	l.Log(PanicLevel, i...)
+	l.Log(context.Background(), PanicLevel, i...)
 	panic(fmt.Sprint(i...))
 }
 
 func (l *Logger) Panicf(format string, i ...interface{}) {
-	l.Logf(PanicLevel, format, i...)
+	l.Logf(context.Background(), PanicLevel, format, i...)
 	panic(fmt.Sprintf(format, i...))
+}
+
+func (l *Logger) PanicContext(ctx context.Context, i ...interface{}) {
+	l.Log(ctx, PanicLevel, i...)
+	panic(fmt.Sprint(i...))
 }
