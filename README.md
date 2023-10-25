@@ -47,7 +47,18 @@ func main() {
 
 If you do not want to be notified of a particular log level, you can set
 ```go
+package discord
+
+import "github.com/seipan/loghook"
+
+var (
+	// DiscordWebhookURL is a webhook url for discord.
+	DiscordWebhookURL = "https://discord.com/api/webhooks/xxxxxxxx/xxxxxxxx"
+)
+
 func main(){
+	logger := loghook.NewLogger("", "test", "discord", DiscordWebhookURL)
+
 	logger.NoSendDebug()
 	logger.Debug("test")
 	logger.NoSendInfo()
@@ -56,9 +67,37 @@ func main(){
 ```
 You can also change the webhook to be notified for each log level
 ```go
+package discord
+
+import "github.com/seipan/loghook"
+
+var (
+	// DiscordWebhookURL is a webhook url for discord.
+	DiscordWebhookURL = "https://discord.com/api/webhooks/xxxxxxxx/xxxxxxxx"
+)
+
 func main(){
+	logger := loghook.NewLogger("", "test", "discord", DiscordWebhookURL)
+
 	logger.SetErrorWebhook(DiscordErrorWebhookURL)
 	logger.Error("test")
+}
+```
+There is also a method that takes 'context' as an argument
+```go
+package discord
+
+import "github.com/seipan/loghook"
+
+var (
+	// DiscordWebhookURL is a webhook url for discord.
+	DiscordWebhookURL = "https://discord.com/api/webhooks/xxxxxxxx/xxxxxxxx"
+)
+
+func main(){
+	logger := loghook.NewLogger("", "test", "discord", DiscordWebhookURL)
+
+	logger.ErrorContext("test")
 }
 ```
 If you want a more detailed example, please see the [examples](https://github.com/seipan/loghook/blob/main/example).
