@@ -45,7 +45,19 @@ func TestDiscordExample(t *testing.T) {
 	logger.DebugContext(context.Background(), "test")
 	logger.NoSendInfo()
 	logger.Infof("test %s", "info")
+}
+
+func TestDiscordExampleWithContext(t *testing.T) {
+	logger := NewLogger("", "test", "discord", DiscordWebhookURL)
+	logger.SetLevel(DebugLevel)
+	logger.SetWebhook(DiscordWebhookURL)
+
+	logger.NoSendDebug()
+	logger.DebugContext(context.Background(), "test")
+	logger.NoSendInfo()
 	logger.InfoContext(context.Background(), "test")
+	logger.NoSendWarn()
+	logger.WarnContext(context.Background(), "test")
 }
 
 func TestSlackExample(t *testing.T) {
@@ -55,5 +67,17 @@ func TestSlackExample(t *testing.T) {
 
 	logger.NoSendDebug()
 	logger.Debugf("test %s", "debug")
+}
+
+func TestSlackExampleWithContext(t *testing.T) {
+	logger := NewLogger("", "test", "slack", SlackWebhookURL)
+	logger.SetLevel(DebugLevel)
+	logger.SetWebhook(SlackWebhookURL)
+
+	logger.NoSendDebug()
 	logger.DebugContext(context.Background(), "test")
+	logger.NoSendInfo()
+	logger.InfoContext(context.Background(), "test")
+	logger.NoSendWarn()
+	logger.WarnContext(context.Background(), "test")
 }
