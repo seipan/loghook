@@ -5,6 +5,7 @@
 ![Issues](https://img.shields.io/github/issues/seipan/loghook?style=flat-square)
 ![Open Issues](https://img.shields.io/github/issues-raw/seipan/loghook?style=flat-square)
 [![go](https://github.com/seipan/loghook/actions/workflows/go.yml/badge.svg)](https://github.com/seipan/loghook/actions/workflows/go.yml)
+[![codecov](https://codecov.io/gh/seipan/loghook/graph/badge.svg?token=OALYRHUB88)](https://codecov.io/gh/seipan/loghook)
 
 <img src="img/logo.png" alt="eyecatch" height="250">
 
