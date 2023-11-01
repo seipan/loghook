@@ -105,3 +105,6 @@ If you want a more detailed example, please see the [examples](https://github.co
 ## License
 Code licensed under 
 [the MIT License](https://github.com/seipan/loghook/blob/main/LICENSE).
+
+## Author
+[seipan](https://github.com/seipan).
