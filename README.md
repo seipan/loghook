@@ -108,3 +108,8 @@ Code licensed under
 
 ## Author
 [seipan](https://github.com/seipan).
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=seipan/loghook&type=Date)](https://star-history.com/#seipan/loghook&Date)
+
