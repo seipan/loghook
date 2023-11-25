@@ -45,6 +45,8 @@ type Logger struct {
 
 	Discord *Discord
 
+	SendLevel Level
+
 	// This is the url of the icon image of the bot that sends notifications to the discord
 	// ex) https://cdn-ak.f.st-hatena.com/images/fotolife/h/hikiniku0115/20190806/20190806000644.png
 	Img string
@@ -75,6 +77,42 @@ func (l *Logger) checkTypes() bool {
 
 func (l *Logger) SetLevel(level Level) {
 	atomic.StoreUint32((*uint32)(&l.level), uint32(level))
+}
+
+func (l *Logger) SetSendLevel(level Level) {
+	atomic.StoreUint32((*uint32)(&l.SendLevel), uint32(level))
+}
+
+func (l *Logger) setNosend() {
+	switch l.SendLevel {
+	case DebugLevel:
+		l.NoSendDebug()
+	case InfoLevel:
+		l.NoSendDebug()
+		l.NoSendInfo()
+	case WarnLevel:
+		l.NoSendDebug()
+		l.NoSendInfo()
+		l.NoSendWarn()
+	case ErrorLevel:
+		l.NoSendDebug()
+		l.NoSendInfo()
+		l.NoSendWarn()
+		l.NoSendError()
+	case PanicLevel:
+		l.NoSendDebug()
+		l.NoSendInfo()
+		l.NoSendWarn()
+		l.NoSendError()
+		l.NoSendPanic()
+	case FatalLevel:
+		l.NoSendDebug()
+		l.NoSendInfo()
+		l.NoSendWarn()
+		l.NoSendError()
+		l.NoSendPanic()
+		l.NoSendFatal()
+	}
 }
 
 // Sets the specified url in the webhook for each level
