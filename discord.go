@@ -46,34 +46,43 @@ type Discord struct {
 	fatalWebhook string
 }
 
+// NewDiscord returns a structure Discord that manages the webhooks of Discord.
 func NewDiscord(webhook string) *Discord {
 	return &Discord{webhook: webhook}
 }
 
+// These return each webhook of Discord.
+// If the webhook url for any level is not set, the webhook url set by SetWebhook() will be used.
 func (d *Discord) Webhook() string {
 	return d.webhook
 }
 
+// It returns the webhook for the debug level.
 func (d *Discord) DebugWebhook() string {
 	return d.debugWebhook
 }
 
+// It returns the webhook for the info level.
 func (d *Discord) InfoWebhook() string {
 	return d.infoWebhook
 }
 
+// It returns the webhook for the warn level.
 func (d *Discord) WarnWebhook() string {
 	return d.warnWebhook
 }
 
+// It returns the webhook for the error level.
 func (d *Discord) ErrorWebhook() string {
 	return d.errorWebhook
 }
 
+// It returns the webhook for the panic level.
 func (d *Discord) PanicWebhook() string {
 	return d.panicWebhook
 }
 
+// It returns the webhook for the fatal level.
 func (d *Discord) FatalWebhook() string {
 	return d.fatalWebhook
 }
