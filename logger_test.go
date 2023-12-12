@@ -25,6 +25,8 @@ package loghook
 import (
 	"context"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var (
@@ -80,4 +82,12 @@ func TestSlackExampleWithContext(t *testing.T) {
 	logger.InfoContext(context.Background(), "test")
 	logger.NoSendWarn()
 	logger.WarnContext(context.Background(), "test")
+}
+
+func TestSetNosend(t *testing.T) {
+	logger := NewLogger("", "test", "discord", DiscordWebhookURL)
+	logger.SetSendLevel(DebugLevel)
+	logger.setNosend()
+
+	assert.Equal(t, "nosend", logger.resWebhookURLbyLevel(DebugLevel))
 }
