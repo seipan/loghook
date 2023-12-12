@@ -116,7 +116,6 @@ func (l *Logger) setNosend() {
 }
 
 // Sets the specified url in the webhook for each level
-
 func (l *Logger) SetWebhook(webhook string) {
 	if l.Types == "slack" {
 		l.Slack.SetWebhook(webhook)
@@ -282,6 +281,7 @@ func (l *Logger) NoSendFatal() {
 
 func (l *Logger) Log(ctx context.Context, level Level, args ...interface{}) {
 	if l.check(ctx, level) {
+		l.setNosend()
 		message := ""
 		message = fmt.Sprint(args...)
 
@@ -319,6 +319,7 @@ func (l *Logger) Log(ctx context.Context, level Level, args ...interface{}) {
 
 func (l *Logger) Logf(ctx context.Context, level Level, format string, args ...interface{}) {
 	if l.check(ctx, level) {
+		l.setNosend()
 		message := ""
 		message = fmt.Sprintf(format, args...)
 
