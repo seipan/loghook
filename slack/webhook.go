@@ -28,7 +28,31 @@ import (
 	"net/url"
 )
 
-func SetWebfookMessage(message string, level string, user string, img string) *Payload {
+type SlackHandler struct {
+	WebhookURL string
+
+	message string
+	level   string
+	user    string
+	img     string
+}
+
+func (sh *SlackHandler) Send(msg string) error {
+	sl := setWebfookMessage(msg, sh.level, sh.user, sh.img)
+	return sendLogToSlack(sh.WebhookURL, sl)
+}
+
+func NewSlackHandler(webhookURL string, message string, level string, user string, img string) *SlackHandler {
+	return &SlackHandler{
+		WebhookURL: webhookURL,
+		message:    message,
+		level:      level,
+		user:       user,
+		img:        img,
+	}
+}
+
+func setWebfookMessage(message string, level string, user string, img string) *Payload {
 	sl := &Payload{
 		Username: user,
 		IconUrl:  img,
@@ -37,7 +61,7 @@ func SetWebfookMessage(message string, level string, user string, img string) *P
 	return sl
 }
 
-func SendLogToSlack(webhookURL string, sw *Payload) error {
+func sendLogToSlack(webhookURL string, sw *Payload) error {
 	p, err := json.Marshal(sw)
 	if err != nil {
 		return err
