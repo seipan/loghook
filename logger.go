@@ -41,10 +41,6 @@ type Logger struct {
 
 	Types Option
 
-	Slack *Slack
-
-	Discord *Discord
-
 	SendLevel Level
 
 	// This is the url of the icon image of the bot that sends notifications to the discord
@@ -58,12 +54,10 @@ type Logger struct {
 
 func NewLogger(img string, name string, types string, webhook string) *Logger {
 	return &Logger{
-		level:   InfoLevel,
-		Img:     img,
-		Name:    name,
-		Types:   *NewOption(types, ""),
-		Slack:   NewSlack(webhook),
-		Discord: NewDiscord(webhook),
+		level: InfoLevel,
+		Img:   img,
+		Name:  name,
+		Types: *NewOption(types, ""),
 	}
 }
 
