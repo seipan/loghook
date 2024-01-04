@@ -29,7 +29,32 @@ import (
 	"net/http"
 )
 
-func SendLogToDiscord(whurl string, dw *discordWebhook) error {
+type DiscordHandler struct {
+	WebhookURL string
+
+	message string
+	level   string
+	user    string
+	img     string
+}
+
+func NewDiscordHandler(webhookURL string, message string, level string, user string, img string) *DiscordHandler {
+	return &DiscordHandler{
+		WebhookURL: webhookURL,
+		message:    message,
+		level:      level,
+		user:       user,
+		img:        img,
+	}
+}
+
+func (dh *DiscordHandler) Send(msg string) error {
+	dw := setWebhookStruct(dh.user, dh.img)
+	dw = setWebfookMessage(dw, msg, dh.level)
+	return sendLogToDiscord(dh.WebhookURL, dw)
+}
+
+func sendLogToDiscord(whurl string, dw *discordWebhook) error {
 	j, err := json.Marshal(dw)
 	if err != nil {
 		return fmt.Errorf("json marshal err: %w", err)
@@ -51,7 +76,7 @@ func SendLogToDiscord(whurl string, dw *discordWebhook) error {
 	return nil
 }
 
-func SetWebhookStruct(name string, img string) *discordWebhook {
+func setWebhookStruct(name string, img string) *discordWebhook {
 	dw := &discordWebhook{
 		UserName:  name,
 		AvatarURL: img,
@@ -59,7 +84,7 @@ func SetWebhookStruct(name string, img string) *discordWebhook {
 	return dw
 }
 
-func SetWebfookMessage(dis *discordWebhook, message string, level string) *discordWebhook {
+func setWebfookMessage(dis *discordWebhook, message string, level string) *discordWebhook {
 	dis.Embeds = []discordEmbed{
 		{
 			Title: level,

@@ -29,8 +29,6 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
-
-	"github.com/seipan/loghook/discord"
 )
 
 // This structure defines what is needed to output logs to any channel on discord or slack.
@@ -214,11 +212,9 @@ func (l *Logger) Log(ctx context.Context, level Level, args ...interface{}) {
 
 		// send log to discord or slack
 		if l.Types.Types() == "discord" {
-			dis := discord.SetWebhookStruct(l.Name, l.Img)
-			dis = discord.SetWebfookMessage(dis, text, level.String())
-			err := discord.SendLogToDiscord(webhook, dis)
+			err := l.Types.Handler.Send(text)
 			if err != nil {
-				fmt.Printf("failed to send log to discord: %v\n", err)
+				fmt.Printf("failed to send log to slack: %v\n", err)
 			}
 		} else if l.Types.Types() == "slack" {
 			err := l.Types.Handler.Send(text)
@@ -251,11 +247,9 @@ func (l *Logger) Logf(ctx context.Context, level Level, format string, args ...i
 
 		// send log to discord or slack
 		if l.Types.Types() == "discord" {
-			dis := discord.SetWebhookStruct(l.Name, l.Img)
-			dis = discord.SetWebfookMessage(dis, text, level.String())
-			err := discord.SendLogToDiscord(webhook, dis)
+			err := l.Types.Handler.Send(text)
 			if err != nil {
-				fmt.Printf("failed to send log to discord: %v\n", err)
+				fmt.Printf("failed to send log to slack: %v\n", err)
 			}
 		} else if l.Types.Types() == "slack" {
 			err := l.Types.Handler.Send(text)
