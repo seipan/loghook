@@ -7,9 +7,9 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "bluma",
-	Short: "CLI tool to parse OpenAPI and stress test each endpoint.",
-	Long:  `CLI tool to parse OpenAPI and stress test each endpoint..`,
+	Use:   "test",
+	Short: "e2e test",
+	Long:  `e2e test of loghook`,
 	Run: func(cmd *cobra.Command, args []string) {
 		discordURL, err := cmd.Flags().GetString("discord")
 		if err != nil {
