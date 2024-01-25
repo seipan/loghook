@@ -10,19 +10,23 @@ var rootCmd = &cobra.Command{
 	Use:   "test",
 	Short: "e2e test",
 	Long:  `e2e test of loghook`,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) (err error) {
 		discordURL, err := cmd.Flags().GetString("discord")
 		if err != nil {
 			log.Println(err)
+			return err
 		}
 		slackURL, err := cmd.Flags().GetString("slack")
 		if err != nil {
 			log.Println(err)
+			return err
 		}
 		err = eToeTest(discordURL, slackURL)
 		if err != nil {
 			log.Println(err)
+			return err
 		}
+		return nil
 	},
 }
 
