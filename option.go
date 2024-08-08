@@ -27,14 +27,87 @@ package loghook
 type Option struct {
 	// slack discord, etc.
 	types string
+
+	Webhook Webhook
+
+	Handler Handler
 }
 
 func (o *Option) Types() string {
 	return o.types
 }
 
-func NewOption(types string) *Option {
+func (o *Option) SetTypes(types string) {
+	o.types = types
+}
+
+func (o *Option) SetWebhook(webhook Webhook) {
+	o.Webhook = webhook
+}
+
+func (o *Option) SetHandler(handler Handler) {
+	o.Handler = handler
+}
+
+func (o *Option) SetWebhookURL(url string) {
+	o.Webhook.SetWebhook(url)
+}
+
+func (o *Option) SetDebugWebhookURL(url string) {
+	o.Webhook.SetDebugWebhook(url)
+}
+
+func (o *Option) SetInfoWebhookURL(url string) {
+	o.Webhook.SetInfoWebhook(url)
+}
+
+func (o *Option) SetWarnWebhookURL(url string) {
+	o.Webhook.SetWarnWebhook(url)
+}
+
+func (o *Option) SetErrorWebhookURL(url string) {
+	o.Webhook.SetErrorWebhook(url)
+}
+
+func (o *Option) SetPanicWebhookURL(url string) {
+	o.Webhook.SetPanicWebhook(url)
+}
+
+func (o *Option) SetFatalWebhookURL(url string) {
+	o.Webhook.SetFatalWebhook(url)
+}
+
+func (o *Option) WebhookURL() string {
+	return o.Webhook.Webhook()
+}
+
+func (o *Option) DebugWebhookURL() string {
+	return o.Webhook.DebugWebhook()
+}
+
+func (o *Option) InfoWebhookURL() string {
+	return o.Webhook.InfoWebhook()
+}
+
+func (o *Option) WarnWebhookURL() string {
+	return o.Webhook.WarnWebhook()
+}
+
+func (o *Option) ErrorWebhookURL() string {
+	return o.Webhook.ErrorWebhook()
+}
+
+func (o *Option) PanicWebhookURL() string {
+	return o.Webhook.PanicWebhook()
+}
+
+func (o *Option) FatalWebhookURL() string {
+	return o.Webhook.FatalWebhook()
+}
+
+func NewOption(types string, webhook string) *Option {
 	return &Option{
-		types: types,
+		types:   types,
+		Webhook: *NewWebhook(webhook),
 	}
 }
